@@ -348,27 +348,27 @@ class AccountTest extends \OxidTestCase
 
     /**
      * If there is no active user the number of items returned by
-     * \OxidEsales\EshopCommunity\Application\Controller\AccountController::getProductReviewItemsCnt
+     * \OxidEsales\EshopCommunity\Application\Controller\AccountController::getReviewItemsCnt
      * should be 0
      *
-     * @covers \OxidEsales\EshopCommunity\Application\Controller\AccountController::getProductReviewItemsCnt
+     * @covers \OxidEsales\EshopCommunity\Application\Controller\AccountController::getReviewItemsCnt
      */
-    public function testGetProductReviewItemsCntReturnZeroForNoUser()
+    public function testGetReviewItemsCntReturnZeroForNoUser()
     {
         $expectedReviewsCount = 0;
 
         $accountReviewControllerMock = $this->getMock(\OxidEsales\Eshop\Application\Controller\AccountController::class, ['getUser']);
         $accountReviewControllerMock->expects($this->any())->method('getUser')->will($this->returnValue(false));
 
-        $actualReviewsCount = $accountReviewControllerMock->getProductReviewItemsCnt();
+        $actualReviewsCount = $accountReviewControllerMock->getReviewItemsCnt();
 
         $this->assertSame( $expectedReviewsCount, $actualReviewsCount);
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Application\Controller\AccountController::getProductReviewItemsCnt
+     * @covers \OxidEsales\EshopCommunity\Application\Controller\AccountController::getReviewItemsCnt
      */
-    public function testGetProductReviewItemsCntReturnsExpectedCountForActiveUser()
+    public function testGetReviewItemsCntReturnsExpectedCountForActiveUser()
     {
         $expectedReviewsCount = 100;
 
@@ -382,7 +382,7 @@ class AccountTest extends \OxidTestCase
         $reviewsMock->expects($this->any())->method('getProductReviewItemsCntByUserId')->will($this->returnValue($expectedReviewsCount));
         \oxTestModules::addModuleObject(\OxidEsales\Eshop\Application\Model\Review::class, $reviewsMock);
 
-        $actualReviewsCount = $accountReviewControllerMock->getProductReviewItemsCnt();
+        $actualReviewsCount = $accountReviewControllerMock->getReviewItemsCnt();
 
         $this->assertSame( $expectedReviewsCount, $actualReviewsCount);
     }
