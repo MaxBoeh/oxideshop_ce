@@ -5,6 +5,7 @@
  */
 namespace OxidEsales\EshopCommunity\Internal\Review\ServiceFactory;
 
+use OxidEsales\Eshop\Core\Database\Adapter\Doctrine\Database;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\EshopCommunity\Internal\Review\Dao\ProductRatingDao;
 use OxidEsales\EshopCommunity\Internal\Review\Dao\ProductRatingDaoInterface;
@@ -290,6 +291,10 @@ class ReviewServiceFactory
      */
     private function getDatabase()
     {
-        return DatabaseProvider::getDb();
+        $database = DatabaseProvider::getDb();
+        $r = new \ReflectionMethod(Database::class, 'getConnection');
+        $r->setAccessible(true);
+
+        return $r->invoke($database);
     }
 }
