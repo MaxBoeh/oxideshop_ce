@@ -5,7 +5,10 @@
  */
 
 namespace OxidEsales\EshopCommunity\Internal\Common\Dao;
+
 use PDO;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Abstract class for data access objects.
@@ -13,15 +16,15 @@ use PDO;
 abstract class AbstractDao
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Connection
      */
     private $connection;
 
     /**
      * AbstractDao constructor.
-     * @param \Doctrine\DBAL\Connection $connection
+     * @param Connection $connection
      */
-    public function __construct(\Doctrine\DBAL\Connection $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
@@ -29,7 +32,7 @@ abstract class AbstractDao
     /**
      * Method returns query builder.
      *
-     * @return \Doctrine\DBAL\Query\QueryBuilder
+     * @return QueryBuilder
      */
     public function getQueryBuilder()
     {
