@@ -371,41 +371,41 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
     /**
      * Returns maximum allowed size of upload file and formatted size equivalent
      *
-     * @param int  $iMaxFileSize recommended maximum size of file (normalu value is taken from php ini, otherwise sets 2MB)
-     * @param bool $blFormatted  Return formated
+     * @param string $maxFileSizeByte recommended maximum size of file (normal value is taken from php ini, otherwise sets 2MB)
+     * @param bool   $blFormatted     Return formatted
      *
      * @return array
      */
-    protected function _getMaxUploadFileInfo($iMaxFileSize, $blFormatted = false)
+    protected function _getMaxUploadFileInfo($maxFileSize, $blFormatted = false)
     {
-        $iMaxFileSize = $iMaxFileSize ? $iMaxFileSize : '2M';
+        $maxFileSize = $maxFileSize ? trim($maxFileSize) : '2M';
 
         // processing config
-        $iMaxFileSize = trim($iMaxFileSize);
-        $sParam = strtolower($iMaxFileSize{strlen($iMaxFileSize) - 1});
-        switch ($sParam) {
+        $marker = strtolower($maxFileSize[strlen($maxFileSize) - 1]);
+        $maxFileSizeByte = substr($maxFileSize, 0, -1);
+        switch ($marker) {
             case 'g':
-                $iMaxFileSize *= 1024;
+                $maxFileSizeByte *= 1024;
             // no break
             case 'm':
-                $iMaxFileSize *= 1024;
+                $maxFileSizeByte *= 1024;
             // no break
             case 'k':
-                $iMaxFileSize *= 1024;
+                $maxFileSizeByte *= 1024;
         }
 
         // formatting
-        $aMarkers = ['KB', 'MB', 'GB'];
-        $sFormattedMaxSize = '';
+        $markers = ['KB', 'MB', 'GB'];
+        $formattedMaxSize = '';
 
-        $iSize = floor($iMaxFileSize / 1024);
-        while ($iSize && current($aMarkers)) {
-            $sFormattedMaxSize = $iSize . " " . current($aMarkers);
-            $iSize = floor($iSize / 1024);
-            next($aMarkers);
+        $size = floor($maxFileSizeByte / 1024);
+        while ($size && current($markers)) {
+            $formattedMaxSize = $size . " " . current($markers);
+            $size = floor($size / 1024);
+            next($markers);
         }
 
-        return [$iMaxFileSize, $sFormattedMaxSize];
+        return [$maxFileSizeByte, $formattedMaxSize];
     }
 
     /**

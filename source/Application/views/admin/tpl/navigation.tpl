@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=[{$charset}]">
     <script language="javascript">
 
-        [{if $loadbasefrm}]
+        [{if isset($loadbasefrm) && $loadbasefrm}]
         //reloading main frame
         window.onload = function ()
         {
@@ -81,7 +81,7 @@
                                 [{assign var='sm' value=$sm+1}]
                                 [{if $submenuitem->getAttribute('linkicon')}] [{assign var='linkicon' value=$submenuitem->getAttribute('linkicon')}][{/if}]
                                 <li class="[{if $submenuitem->getAttribute('active')}]act[{assign var='sNavActId' value="nav-`$mh`-`$mn`-`$sm`"}][{/if}]" id="nav-[{$mh}]-[{$mn}]-[{$sm}]" name="nav_[{$submenuitem->getAttribute('cl')}]" rel="nav-[{$mh}]-[{$mn}]">
-                                    <a href="[{if $submenuitem->getAttribute('url')}][{$submenuitem->getAttribute('url')}][{else}][{$submenuitem->getAttribute('link')}][{/if}]" onclick="_navAct(this);" target="basefrm" class="rc"><b>[{if $linkicon}]<span class="[{$linkicon}]">[{/if}][{oxmultilang ident=$submenuitem->getAttribute('name')|default:$submenuitem->getAttribute('id') noerror=true}][{if $linkicon}]</span>[{/if}]</b></a>
+                                    <a href="[{if $submenuitem->getAttribute('url')}][{$submenuitem->getAttribute('url')}][{else}][{$submenuitem->getAttribute('link')}][{/if}]" onclick="_navAct(this);" target="basefrm" class="rc"><b>[{if $linkicon}]<span class="[{$linkicon}]">[{/if}][{oxmultilang ident=$submenuitem->getAttribute('name')|default:$submenuitem->getAttribute('id') noerror=true}][{if isset($linkicon)}]</span>[{/if}]</b></a>
                                 </li>
                                 [{assign var='linkicon' value=''}]
                             [{/if}]
@@ -153,7 +153,7 @@
     <script type="text/javascript">
         [{block name="admin_navigation_scripts"}]
             <!--
-            var _expid = [{if $blOpenHistory}]'[{$sHistoryId}]'[{elseif $sNavExpId}]'[{$sNavExpId}]'[{else}]0[{/if}];
+            var _expid = [{if $blOpenHistory}]'[{$sHistoryId}]'[{elseif isset($sNavExpId)}]'[{$sNavExpId}]'[{else}]0[{/if}];
             function _navExp(el){
                 var _cur = el.parentNode,
                     _exp = document.getElementById(_expid);
@@ -162,7 +162,7 @@
                 if(_expid == _cur.id){ _expid = 0;}else{_expid = _cur.id;}
             }
 
-            var _actid = [{if $sNavActId}]'[{$sNavActId}]'[{else}]0[{/if}];
+            var _actid = [{if isset($sNavActId)}]'[{$sNavActId}]'[{else}]0[{/if}];
             function _navAct(el){
                  var _cur = el.parentNode,
                      _act = document.getElementById(_actid);

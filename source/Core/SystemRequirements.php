@@ -1025,29 +1025,30 @@ class SystemRequirements
     /**
      * Parses and calculates given string form byte size value
      *
-     * @param string $sBytes string form byte value (64M, 32K etc)
+     * @param string $bytes string form byte value (64M, 32K etc)
      *
      * @return int
      */
-    protected function _getBytes($sBytes)
+    protected function _getBytes($bytes)
     {
-        $sBytes = trim($sBytes);
-        $sLast = strtolower($sBytes[strlen($sBytes) - 1]);
-        switch ($sLast) {
+        $bytes = trim($bytes);
+        $marker = strtolower($bytes[strlen($bytes) - 1]);
+        $bytes = substr($bytes, 0, -1);
+        switch ($marker) {
             // The 'G' modifier is available since PHP 5.1.0
             // gigabytes
             case 'g':
-                $sBytes *= 1024;
+                $bytes *= 1024;
             // megabytes
             case 'm':
-                $sBytes *= 1024;
+                $bytes *= 1024;
             // kilobytes
             case 'k':
-                $sBytes *= 1024;
+                $bytes *= 1024;
                 break;
         }
 
-        return $sBytes;
+        return $bytes;
     }
 
     /**
