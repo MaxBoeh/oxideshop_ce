@@ -105,6 +105,12 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
      */
     public function passAllErrorsToView(&$aView, $errors)
     {
+        if (! isset($aView['Errors'])) {
+            $aView['Errors'] = [];
+        }
+        if (! isset($aView['Errors']['default'])) {
+            $aView['Errors']['default'] = [];
+        }
         if (count($errors) > 0) {
             foreach ($errors as $sLocation => $aEx2) {
                 foreach ($aEx2 as $sKey => $oEr) {

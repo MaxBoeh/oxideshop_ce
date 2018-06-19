@@ -24,9 +24,7 @@
             <input type="hidden" name="fnc" value="checklogin">
             <input type="hidden" name="cl" value="login">
 
-            [{if $Errors.default|@count}]
-                [{include file="inc_error.tpl" Errorlist=$Errors.default}]
-            [{/if}]
+            [{include file="inc_error.tpl"}]
 
             <label for="usr">[{oxmultilang ident="GENERAL_USER"}]</label>
             <input type="text" name="user" id="usr" value="[{$user}]" size="49" autofocus><br>
@@ -45,7 +43,7 @@
             <label for="prf">[{oxmultilang ident="LOGIN_PROFILE"}]</label>
             <select name="profile" id="prf">
                 [{foreach from=$profiles item=curr_profile key=position}]
-                   <option value="[{$position}]" [{if $curr_profile.2}]selected[{/if}]>[{$curr_profile.0}]</option>
+                   <option value="[{$position}]" [{if isset($curr_profile.2)}]selected[{/if}]>[{$curr_profile.0}]</option>
                 [{/foreach}]
             </select><br>
             [{/if}]
